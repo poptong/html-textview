@@ -13,23 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.sufficientlysecure.htmltextview.example
 
-package org.sufficientlysecure.htmltextview.example;
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import org.sufficientlysecure.htmltextview.example.databinding.ActivityWebViewBinding
 
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import android.webkit.WebView;
+class WebViewActivity: AppCompatActivity() {
 
-public class WebViewActivity extends AppCompatActivity {
-    public static final String EXTRA_TABLE_HTML = "EXTRA_TABLE_HTML";
+        private lateinit var binding: ActivityWebViewBinding
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_web_view);
-        String tableHtml = getIntent().getStringExtra(EXTRA_TABLE_HTML);
-        WebView webView = findViewById(R.id.web_view);
-        webView.loadData(tableHtml, "text/html", "UTF-8");
-    }
+        override fun onCreate(savedInstanceState: Bundle?) {
+                super.onCreate(savedInstanceState)
+                binding = ActivityWebViewBinding.inflate(layoutInflater)
+                setContentView(binding.root)
+
+
+                val tableHtml = intent.getStringExtra(EXTRA_TABLE_HTML)
+                binding.webView.loadData(tableHtml!!, "text/html", "UTF-8")
+        }
+
+        companion object {
+                const val EXTRA_TABLE_HTML = "EXTRA_TABLE_HTML"
+        }
 }

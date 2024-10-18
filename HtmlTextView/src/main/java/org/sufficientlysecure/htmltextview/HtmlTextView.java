@@ -34,8 +34,8 @@ public class HtmlTextView extends JellyBeanSpanFixTextView {
 
     public static final String TAG = "HtmlTextView";
     public static final boolean DEBUG = false;
-    public int blockQuoteBackgroundColor = getResources().getColor(R.color.White);
-    public int blockQuoteStripColor = getResources().getColor(R.color.black);
+    public int blockQuoteBackgroundColor = getResources().getColor(android.R.color.white);
+    public int blockQuoteStripColor = getResources().getColor(android.R.color.black);
     public float blockQuoteStripWidth = 10F;
     public float blockQuoteGap = 20F;
     @Nullable

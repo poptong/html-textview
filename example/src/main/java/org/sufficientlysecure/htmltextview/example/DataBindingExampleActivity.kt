@@ -13,75 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.sufficientlysecure.htmltextview.example;
+package org.sufficientlysecure.htmltextview.example
 
-import android.app.Activity;
-import android.os.Bundle;
+import android.app.Activity
+import android.os.Bundle
+import org.sufficientlysecure.htmltextview.DrawTableLinkSpan
+import org.sufficientlysecure.htmltextview.example.databinding.ActivityDataBindingExampleBinding
 
-import androidx.annotation.Nullable;
-import androidx.databinding.BindingAdapter;
-import androidx.databinding.DataBindingUtil;
+class DataBindingExampleActivity: Activity() {
 
-import org.sufficientlysecure.htmltextview.DrawTableLinkSpan;
-import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
-import org.sufficientlysecure.htmltextview.HtmlTextView;
-import org.sufficientlysecure.htmltextview.example.databinding.ActivityDataBindingExampleBinding;
+        private lateinit var binding: ActivityDataBindingExampleBinding
 
-public class DataBindingExampleActivity extends Activity {
+        override fun onCreate(savedInstanceState: Bundle?) {
+                super.onCreate(savedInstanceState)
+                binding = ActivityDataBindingExampleBinding.inflate(layoutInflater)
+                setContentView(binding.root)
 
-    // layout_name + binding, generated class
-    private ActivityDataBindingExampleBinding binding;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_data_binding_example);
+                // in XML we declared a variable newsItem, data binding generated the set method
+                // once set, all fields/values/views are updated accordingly
+                binding.htmlText.setHtml("<p>Interdum et malesuada <b>some bold text in here</b> fames ac ante ipsum primis in faucibus.</p>")
 
-        // create dummy item
-        NewsItem item = new NewsItem();
-        item.setHtml("<p>Interdum et malesuada <b>some bold text in here</b> fames ac ante ipsum primis in faucibus.</p>");
-
-        // in XML we declared a variable newsItem, data binding generated the set method
-        // once set, all fields/values/views are updated accordingly
-        binding.setNewsItem(item);
-
-        // if you have set an android:id in XML, data binding do the 'findViewById()'
-        DrawTableLinkSpan drawTableLinkSpan = new DrawTableLinkSpan();
-        drawTableLinkSpan.setTableLinkText("[tap for table]");
-        binding.htmlText.setDrawTableLinkSpan(drawTableLinkSpan);
-    }
-
-    /**
-     * This method will be used by data binding when we use app:html in XML.
-     * BindingAdapters only need to be declared once and usable in the whole app.
-     * Its better to put all BindingAdapters in a single Java file.
-     *
-     * @param view The {@link HtmlTextView}
-     * @param html The value from {@link NewsItem#getHtml()}
-     */
-    @BindingAdapter({"html"})
-    public static void displayHtml(HtmlTextView view, @Nullable String html) {
-        view.setHtml(html, new HtmlResImageGetter(view.getContext()));
-    }
-
-    /**
-     * A plain old Java object that holds a HTML string.
-     */
-    public static class NewsItem {
-
-        private String html;
-
-        public void setHtml(String html) {
-            this.html = html;
+                // if you have set an android:id in XML, data binding do the 'findViewById()'
+                val drawTableLinkSpan = DrawTableLinkSpan()
+                drawTableLinkSpan.tableLinkText = "[tap for table]"
+                binding.htmlText.setDrawTableLinkSpan(drawTableLinkSpan)
         }
-
-        /**
-         * This method is called by data binding as we declared app:html="@{newsItem.html}"
-         *
-         * @return the HTML string that will be set into {@link HtmlTextView}
-         */
-        public String getHtml() {
-            return html;
-        }
-    }
 }

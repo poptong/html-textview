@@ -1,2 +1,3 @@
+rootProject.name = "html-textview"
 include ':example'
 include ':HtmlTextView'
