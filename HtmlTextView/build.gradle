@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'bintray-release'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 29
@@ -11,16 +11,22 @@ android {
     }
 }
 
-publish {
-    userOrg = 'sufficientlysecure'
-    groupId = 'org.sufficientlysecure'
-    artifactId = 'html-textview'
-    publishVersion = android.defaultConfig.versionName
-    website = 'https://github.com/SufficientlySecure/html-textview'
-    desc = 'HtmlTextView is an extended TextView component for Android, which can load HTML and converts it into Spannable for displaying it.'
-}
-
 dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
 
- }
+}
+
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = "com.github.afischer"
+                artifactId = "html-textview"
+                version = "4.0.0"
+            }
+        }
+    }
+}
